@@ -14,3 +14,5 @@ ROS 文档： http://wiki.ros.org/
 
 ROS navigation: http://wiki.ros.org/navigation
 
+Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
+
