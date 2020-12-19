@@ -19,3 +19,5 @@ Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESV
 
 ## 仿真
 V-REP vs Gazebo:  https://www.researchgate.net/publication/331688180_Comparative_Analysis_Between_Gazebo_and_V-REP_Robotic_Simulators
+
+V-REP manual: https://www.coppeliarobotics.com/helpFiles/index.html
