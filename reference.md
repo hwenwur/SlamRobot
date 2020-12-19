@@ -1,5 +1,6 @@
 # 参考资料
 
+## SLAM
 Awesome visual SLAM: https://github.com/tzutalin/awesome-visual-slam
 
 Recent SLAM research: https://github.com/YiChenCityU/Recent_SLAM_Research
@@ -16,3 +17,5 @@ ROS navigation: http://wiki.ros.org/navigation
 
 Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
 
+## 仿真
+V-REP vs Gazebo:  https://www.researchgate.net/publication/331688180_Comparative_Analysis_Between_Gazebo_and_V-REP_Robotic_Simulators
