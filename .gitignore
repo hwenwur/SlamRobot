@@ -1,6 +1,10 @@
 # ros map
 map/
 
+# catkin temporary file
+catkin_ws/build
+catkin_ws/devel
+
 # Prerequisites
 *.d
 
