@@ -14,7 +14,7 @@
 ## 主要结构
 1. 建图和定位：`Cartographer`, `OpenVSLAM`(备选)
 2. 里程计：待定
-3. 路径规划：`ROS Navigation`(筹)
+3. 路径规划：`ROS Navigation`(筹)。思路梳理：[navigation](./docs/navigation.md)
 4. 仿真环境：`V-REP`(筹)
 
 ## 开发进度
