@@ -29,4 +29,4 @@
 - 2020/01/09 完善里程计和局部避障
 
 ## 参考资料
-- [reference](./reference.md)
+- [reference](./docs/reference.md)
