@@ -24,3 +24,10 @@ V-REP manual: https://www.coppeliarobotics.com/helpFiles/index.html
 
 V-REP tutorials: https://www.coppeliarobotics.com/helpFiles/en/tutorials.htm
 
+
+## Navigation
+
+ROS Navigation wiki: http://wiki.ros.org/navigation
+
+ros-navigation机器人自主避障导航: https://www.cnblogs.com/hiram-zhang/p/10416081.html
+
