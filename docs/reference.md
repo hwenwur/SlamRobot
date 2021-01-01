@@ -15,8 +15,6 @@ ROS 文档： http://wiki.ros.org/
 
 ROS navigation: http://wiki.ros.org/navigation
 
-Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
-
 How to publish Sensor(Lidar or Camera) data: http://wiki.ros.org/navigation/Tutorials/RobotSetup/Sensors
 
 ## 仿真
@@ -34,4 +32,10 @@ ROS Navigation wiki: http://wiki.ros.org/navigation
 ros-navigation机器人自主避障导航: https://www.cnblogs.com/hiram-zhang/p/10416081.html
 
 TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
+
+## 里程计
+
+RF2O Laser Odometry: https://github.com/MAPIRlab/rf2o_laser_odometry
+
+Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
 
