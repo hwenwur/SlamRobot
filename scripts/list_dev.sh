@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # hwenwur 2020/12/31
-# 输出已插入且在 dev_list 的设备
+# 输出已插入且在 dev_list 的设备和 /dev/ttyUSB* 的关系
 
 dev_list=$(cat <<-'EOF'
 10c4:ea60 Delta2A 雷达
@@ -10,7 +10,7 @@ EOF
 )
 
 if ! ls -1 /dev | grep ttyUSB >/dev/null; then
-    echo 'not plug any devices.'
+    echo 'not plug any devices.' >&2
     exit 1
 fi
 
