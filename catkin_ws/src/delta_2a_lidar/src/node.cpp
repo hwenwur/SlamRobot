@@ -156,7 +156,7 @@ int main(int argc, char * argv[])
 
 				end_scan_time = ros::Time::now();
 				scan_duration = (end_scan_time - start_scan_time).toSec() * 1e-3;
-                printf("Receive Lidar count %lu!\n", lidar_scan_size);
+                // printf("Receive Lidar count %lu!\n", lidar_scan_size);
 
                 //if successful, publish lidar scan
                 int start_node = 0, end_node = 359;
