@@ -17,6 +17,8 @@ ROS navigation: http://wiki.ros.org/navigation
 
 Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
 
+How to publish Sensor(Lidar or Camera) data: http://wiki.ros.org/navigation/Tutorials/RobotSetup/Sensors
+
 ## 仿真
 V-REP vs Gazebo:  https://www.researchgate.net/publication/331688180_Comparative_Analysis_Between_Gazebo_and_V-REP_Robotic_Simulators
 
@@ -30,4 +32,6 @@ V-REP tutorials: https://www.coppeliarobotics.com/helpFiles/en/tutorials.htm
 ROS Navigation wiki: http://wiki.ros.org/navigation
 
 ros-navigation机器人自主避障导航: https://www.cnblogs.com/hiram-zhang/p/10416081.html
+
+TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
 
