@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(delta_lidar)
+project(delta_2a_lidar)
 
 set(delta_lidar_SDK_PATH "./sdk/")
 

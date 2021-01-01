@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>delta_lidar</name>
+  <name>delta_2a_lidar</name>
   <version>1.0.0</version>
   <description>The delta_lidar ros package, support delta_lidar </description>
 
