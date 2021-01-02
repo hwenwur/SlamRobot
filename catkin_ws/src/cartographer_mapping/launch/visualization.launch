@@ -1,5 +1,5 @@
 <launch>
   <!-- Start RViz with custom view -->
   <include file="$(dirname)/mapping.launch"/>
-  <node pkg="rviz" type="rviz" name="show_rviz" args="-d $(find cartographer_mapping)/rviz/demo.rviz"/>    
+  <node pkg="rviz" type="rviz" name="show_rviz" args="-d $(find cartographer_mapping)/rviz/demo.rviz"/>
 </launch>

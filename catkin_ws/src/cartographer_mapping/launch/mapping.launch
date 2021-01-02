@@ -1,17 +1,16 @@
 <launch>
-    
+
     <!-- Robot description-->
     <param name="robot_description" textfile="$(find cartographer_mapping)/urdf/head_2d.urdf" />
 
     <!-- Robot stat publisher -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-        
+
     <!-- Start Delta2a lidar sensor node which provides LaserScan data  -->
     <include file="$(find delta_2a_lidar)/launch/delta_lidar.launch"/>
 
     <!-- static transform between base_link and laser frame -->
-    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
-        args="0.0 0.0 0.10 0.0 0.0 0.0 /base_link /laser 100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.0 0.0 0.10 0.0 0.0 0.0 /base_link /laser 100" />
 
     <!-- Laser odometry -->
     <include file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch" />
@@ -24,7 +23,6 @@
     </node>
 
     <!-- Convert Cartographer map into ROS occupancy grid map -->
-    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" 
-        args="-resolution 0.05" />
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
 
 </launch>
