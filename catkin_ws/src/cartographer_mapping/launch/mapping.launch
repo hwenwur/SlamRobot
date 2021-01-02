@@ -12,8 +12,14 @@
         <!-- <param name="inverted" type="bool" value="false"/> -->
         <!-- <param name="angle_compensate" type="bool" value="true"/> -->
     </node>
-		
-		<!-- Start Google Cartographer node with custom configuration file-->
+
+    <!--### static transform between base_link and laser frame -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.0 0.0 0.10 0.0 0.0 0.0 /base_link /laser 100" />
+
+    <!-- Laser odometry -->
+    <include file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch" />
+
+	<!-- Start Google Cartographer node with custom configuration file-->
     <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
           -configuration_directory
               $(find cartographer_mapping)/configuration_files
