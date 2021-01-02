@@ -1,5 +1,9 @@
 # 参考资料
 
+## 例子
+
+Turtlebot3: https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/
+
 ## SLAM
 Awesome visual SLAM: https://github.com/tzutalin/awesome-visual-slam
 
@@ -16,6 +20,8 @@ ROS 文档： http://wiki.ros.org/
 ROS navigation: http://wiki.ros.org/navigation
 
 How to publish Sensor(Lidar or Camera) data: http://wiki.ros.org/navigation/Tutorials/RobotSetup/Sensors
+
+TF Debugging tool: http://wiki.ros.org/tf/Debugging%20tools
 
 ## 仿真
 V-REP vs Gazebo:  https://www.researchgate.net/publication/331688180_Comparative_Analysis_Between_Gazebo_and_V-REP_Robotic_Simulators
