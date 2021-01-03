@@ -1,0 +1,16 @@
+<launch>
+
+   <master auto="start"/>
+   <!--- Run AMCL -->
+   <include file="$(find amcl)/examples/amcl_omni.launch" />
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <rosparam file="$(find robot_navigation)/configurations/common_costmap.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find robot_navigation)/configurations/common_costmap.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find robot_navigation)/configurations/local_constmap.yaml" command="load" />
+      <rosparam file="$(find robot_navigation)/configurations/global_costmap.yaml" command="load" />
+      <rosparam file="$(find robot_navigation)/configurations/base_local_planner.yaml" command="load" />
+   </node>
+
+</launch> 
+

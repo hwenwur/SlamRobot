@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/opt/ros/melodic/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/cartographer_mapping/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/rf2o_laser_odometry/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}
