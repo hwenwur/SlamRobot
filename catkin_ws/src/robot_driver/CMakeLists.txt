@@ -10,6 +10,7 @@ project(robot_driver)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
+  robot_driver
 )
 
 ## System dependencies are found with CMake's conventions
@@ -115,7 +116,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
