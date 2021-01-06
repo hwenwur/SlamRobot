@@ -4,6 +4,8 @@
 
 Turtlebot3: https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/
 
+TIAGo: http://wiki.ros.org/Robots/TIAGo/Tutorials#Tutorials_Installation
+
 ## SLAM
 Awesome visual SLAM: https://github.com/tzutalin/awesome-visual-slam
 
@@ -38,6 +40,8 @@ ROS Navigation wiki: http://wiki.ros.org/navigation
 ros-navigation机器人自主避障导航: https://www.cnblogs.com/hiram-zhang/p/10416081.html
 
 TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
+
+TIAGo Navigation: http://wiki.ros.org/Robots/TIAGo/Tutorials/Navigation/Localization
 
 ## 里程计
 
