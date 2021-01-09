@@ -33,10 +33,17 @@ int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "robot_driver_node");
     ros::NodeHandle nh;
-    robotserial::Serial mSerial("/dev/pts/3", B9600);
+    ros::NodeHandle nh_private("~");
+
+    std::string serialPort;
+    std::string topic;
+    nh_private.getParam("serial_port", serialPort);
+    nh_private.getParam("cmd_vel_topic", topic);
+
+    robotserial::Serial mSerial(serialPort, B9600);
     mSerial.open();
     serial = &mSerial;
-    ros::Subscriber sub = nh.subscribe("/turtle1/cmd_vel", 1000, twistCallback);
+    ros::Subscriber sub = nh.subscribe(topic, 1000, twistCallback);
     ros::spin();
     mSerial.close();
     return 0;

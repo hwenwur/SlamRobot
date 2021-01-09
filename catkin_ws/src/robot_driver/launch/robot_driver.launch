@@ -1,0 +1,6 @@
+<launch>
+    <node name="robot_driver" pkg="robot_driver" type="robot_driver_node" output="screen">
+        <param name="serial_port" value="/dev/pts/1"/>
+        <param name="cmd_vel_topic" value="/turtle1/cmd_vel"/>
+    </node>
+</launch>
