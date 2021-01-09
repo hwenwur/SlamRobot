@@ -4,6 +4,13 @@
 #include <sstream>
 #include "robot_serial.h"
 
+typedef struct
+{
+    float vx;    // x 轴线速度
+    float vy;    // y 轴线速度
+    float omega; // z 轴角速度
+} SerialFrame;
+
 robotserial::Serial *serial;
 
 void twistCallback(const geometry_msgs::Twist &msg)
@@ -12,11 +19,9 @@ void twistCallback(const geometry_msgs::Twist &msg)
               << "angular: " << msg.angular.x << ", " << msg.angular.y << ", " << msg.angular.z << "\n";
     if (serial->isOpen())
     {
-        // todo
-        std::stringstream ss;
-        ss << "linear.x: " << msg.linear.x << ", angular.z: " << msg.angular.z << ";\n";
-        std::string data(ss.str());
-        serial->write(data.c_str(), data.length());
+        SerialFrame frame = {(float)msg.linear.x, (float)msg.linear.y, (float)msg.angular.z};
+        serial->write(&frame, sizeof(SerialFrame));
+        serial->write("\r\n", 2);
     }
     else
     {
@@ -28,9 +33,9 @@ int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "robot_driver_node");
     ros::NodeHandle nh;
-    robotserial::Serial mSerial("/dev/pts/0", B9600);
+    robotserial::Serial mSerial("/dev/pts/3", B9600);
+    mSerial.open();
     serial = &mSerial;
-    serial->open();
     ros::Subscriber sub = nh.subscribe("/turtle1/cmd_vel", 1000, twistCallback);
     ros::spin();
     mSerial.close();
