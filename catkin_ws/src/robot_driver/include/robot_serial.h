@@ -1,3 +1,5 @@
+#ifndef ROBOT_SERIAL_H
+#define ROBOT_SERIAL_H
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
@@ -10,6 +12,8 @@
     Very simple header-only serial library.
     Author: hwenwur
     Date: 2021/01/09
+
+    How to debug: strace -P /dev/ttyUSB0 -ewrite,read -x -p <PID>
  */
 namespace robotserial
 {
@@ -25,12 +29,14 @@ namespace robotserial
     {
     public:
         Serial(const std::string &path, unsigned int baudRate = B9600);
+        ~Serial();
         int open();
         bool isOpen();
         SerialStatus getStatus();
         int setup();
         int close();
         int write(const void *data, size_t count);
+        bool writeAll(const void *data, size_t count);
         int read(void *data, size_t count);
 
     private:
@@ -40,7 +46,13 @@ namespace robotserial
         int fd;
     };
 
+    // end of header file.
+
     Serial::Serial(const std::string &path, unsigned int baudRate) : path(path), baudRate(baudRate), status(SerialStatus::UNSET) {}
+    Serial::~Serial()
+    {
+        ::close(fd);
+    }
     int Serial::open()
     {
         fd = ::open(path.c_str(), O_RDWR);
@@ -84,8 +96,21 @@ namespace robotserial
 
         cfsetispeed(&tty, baudRate);
         cfsetospeed(&tty, baudRate);
+
+        // 以下设置参考： https://man7.org/linux/man-pages/man1/stty.1.html
+
         tty.c_cc[VTIME] = 5;
         tty.c_cc[VMIN] = 1;
+
+        tty.c_cflag |= CRTSCTS;
+        tty.c_cflag &= ~HUPCL;
+
+        tty.c_iflag |= IGNBRK;
+        tty.c_iflag &= ~(BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+
+        tty.c_lflag &= ~(ECHOE | ECHONL | ECHOCTL | ECHOKE | ECHOK | ISIG | ICANON | IEXTEN);
+
+        tty.c_oflag &= ~OPOST;
 
         if (tcsetattr(fd, TCSANOW, &tty) != 0)
         {
@@ -109,10 +134,31 @@ namespace robotserial
     }
     int Serial::write(const void *data, size_t count)
     {
+        // 可能在 data 没有完全写入之前就返回，
+        // 比如缓冲区满或收到 Ctrl + C 等信号后。
         return ::write(fd, data, count);
     }
     int Serial::read(void *data, size_t count)
     {
         return ::read(fd, data, count);
     }
+    bool Serial::writeAll(const void *data, size_t count)
+    {
+        int r = ::write(fd, data, count);
+        if (r < 0)
+        {
+            std::cerr << "Error: " << strerror(errno) << "\n";
+            return false;
+        }
+        else if (r < count)
+        {
+            Serial::writeAll((char *)data + r, count - r);
+        }
+        else
+        {
+            return true;
+        }
+    }
 } // namespace robotserial
+
+#endif

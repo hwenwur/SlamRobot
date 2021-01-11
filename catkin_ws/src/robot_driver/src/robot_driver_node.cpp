@@ -20,8 +20,8 @@ void twistCallback(const geometry_msgs::Twist &msg)
     if (serial->isOpen())
     {
         SerialFrame frame = {(float)msg.linear.x, (float)msg.linear.y, (float)msg.angular.z};
-        serial->write(&frame, sizeof(SerialFrame));
-        serial->write("\r\n", 2);
+        serial->writeAll(&frame, sizeof(SerialFrame));
+        serial->writeAll("\r\n", 2);
     }
     else
     {
