@@ -10,7 +10,6 @@ project(robot_driver)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
-  robot_driver
 )
 
 ## System dependencies are found with CMake's conventions
