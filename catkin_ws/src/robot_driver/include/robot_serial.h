@@ -23,6 +23,7 @@ namespace robotserial
         NO_SUCH_FILE,      // 设备文件不存在
         PERMISSION_DENIED, // 权限不足，把当前用户加入 dialout 组，或使用 root 运行
         FAILED,            // 其他错误
+        CLOSED,            // 已关闭
         UNSET
     };
     class Serial
@@ -51,7 +52,7 @@ namespace robotserial
     Serial::Serial(const std::string &path, unsigned int baudRate) : path(path), baudRate(baudRate), status(SerialStatus::UNSET) {}
     Serial::~Serial()
     {
-        ::close(fd);
+        Serial::close();
     }
     int Serial::open()
     {
@@ -108,9 +109,9 @@ namespace robotserial
         tty.c_iflag |= IGNBRK;
         tty.c_iflag &= ~(BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
 
-        tty.c_lflag &= ~(ECHOE | ECHONL | ECHOCTL | ECHOKE | ECHOK | ISIG | ICANON | IEXTEN);
+        tty.c_lflag &= ~(ECHO | ECHOE | ECHONL | ECHOCTL | ECHOKE | ECHOK | ISIG | ICANON | IEXTEN);
 
-        tty.c_oflag &= ~OPOST;
+        tty.c_oflag &= ~(OPOST | ONLCR);
 
         if (tcsetattr(fd, TCSANOW, &tty) != 0)
         {
@@ -130,6 +131,7 @@ namespace robotserial
     }
     int Serial::close()
     {
+        status = SerialStatus::CLOSED;
         return ::close(fd);
     }
     int Serial::write(const void *data, size_t count)
