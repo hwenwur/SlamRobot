@@ -49,3 +49,8 @@ RF2O Laser Odometry: https://github.com/MAPIRlab/rf2o_laser_odometry
 
 Event-based Stereo Visual Odometry: https://github.com/HKUST-Aerial-Robotics/ESVO
 
+
+## 其他
+
+Keyobard control: http://wiki.ros.org/teleop_twist_keyboard
+
