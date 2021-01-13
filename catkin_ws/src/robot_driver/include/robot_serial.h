@@ -39,17 +39,22 @@ namespace robotserial
         int write(const void *data, size_t count);
         bool writeAll(const void *data, size_t count);
         int read(void *data, size_t count);
+        void setBlocking(bool m);
 
     private:
         std::string path;
         unsigned int baudRate;
         SerialStatus status;
         int fd;
+        bool blocking; // 阻塞模式，默认 true
     };
 
     // end of header file.
 
-    Serial::Serial(const std::string &path, unsigned int baudRate) : path(path), baudRate(baudRate), status(SerialStatus::UNSET) {}
+    Serial::Serial(const std::string &path, unsigned int baudRate) : path(path),
+                                                                     baudRate(baudRate),
+                                                                     status(SerialStatus::UNSET),
+                                                                     blocking(true) {}
     Serial::~Serial()
     {
         Serial::close();
@@ -100,8 +105,8 @@ namespace robotserial
 
         // 以下设置参考： https://man7.org/linux/man-pages/man1/stty.1.html
 
-        tty.c_cc[VTIME] = 5;
-        tty.c_cc[VMIN] = 1;
+        tty.c_cc[VTIME] = 1;
+        tty.c_cc[VMIN] = blocking ? 1 : 0;
 
         tty.c_cflag |= CRTSCTS;
         tty.c_cflag &= ~HUPCL;
@@ -160,6 +165,14 @@ namespace robotserial
         {
             return true;
         }
+    }
+    void Serial::setBlocking(bool m)
+    {
+        if (isOpen())
+        {
+            std::cerr << "You must call setBlocking before open()";
+        }
+        blocking = m;
     }
 } // namespace robotserial
 
