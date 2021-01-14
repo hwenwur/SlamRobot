@@ -51,15 +51,15 @@ namespace robotserial
 
     // end of header file.
 
-    Serial::Serial(const std::string &path, unsigned int baudRate) : path(path),
-                                                                     baudRate(baudRate),
-                                                                     status(SerialStatus::UNSET),
-                                                                     blocking(true) {}
-    Serial::~Serial()
+    inline Serial::Serial(const std::string &path, unsigned int baudRate) : path(path),
+                                                                            baudRate(baudRate),
+                                                                            status(SerialStatus::UNSET),
+                                                                            blocking(true) {}
+    inline Serial::~Serial()
     {
         Serial::close();
     }
-    int Serial::open()
+    inline int Serial::open()
     {
         fd = ::open(path.c_str(), O_RDWR);
         if (fd < 0)
@@ -90,7 +90,7 @@ namespace robotserial
             return 1;
         }
     }
-    int Serial::setup()
+    inline int Serial::setup()
     {
         struct termios tty;
         if (tcgetattr(fd, &tty) != 0)
@@ -126,32 +126,32 @@ namespace robotserial
         }
         return 0;
     }
-    bool Serial::isOpen()
+    inline bool Serial::isOpen()
     {
         return status == SerialStatus::OK;
     }
-    SerialStatus Serial::getStatus()
+    inline SerialStatus Serial::getStatus()
     {
         return status;
     }
-    int Serial::close()
+    inline int Serial::close()
     {
         status = SerialStatus::CLOSED;
         return ::close(fd);
     }
-    int Serial::write(const void *data, size_t count)
+    inline int Serial::write(const void *data, size_t count)
     {
         // 可能在 data 没有完全写入之前就返回，
         // 比如缓冲区满或收到 Ctrl + C 等信号后。
         return ::write(fd, data, count);
     }
-    int Serial::read(void *data, size_t count)
+    inline int Serial::read(void *data, size_t count)
     {
         return ::read(fd, data, count);
     }
-    bool Serial::writeAll(const void *data, size_t count)
+    inline bool Serial::writeAll(const void *data, size_t count)
     {
-        int r = ::write(fd, data, count);
+        int r = Serial::write(data, count);
         if (r < 0)
         {
             std::cerr << "Error: " << strerror(errno) << "\n";
@@ -166,7 +166,7 @@ namespace robotserial
             return true;
         }
     }
-    void Serial::setBlocking(bool m)
+    inline void Serial::setBlocking(bool m)
     {
         if (isOpen())
         {
