@@ -30,6 +30,7 @@ namespace robotserial
     {
     public:
         Serial(const std::string &path, unsigned int baudRate = B9600);
+        Serial(const Serial &val) = delete;
         ~Serial();
         int open();
         bool isOpen();
