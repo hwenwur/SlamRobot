@@ -1,0 +1,6 @@
+<launch>
+	<node name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen">
+		<!-- <param name="repeat_rate" value="10"/> -->
+		<param name="key_timeout" value="0.5"/>
+	</node>
+</launch>
