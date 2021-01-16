@@ -3,13 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "robot_serial.h"
-
-typedef struct
-{
-    float vx;    // x 轴线速度
-    float vy;    // y 轴线速度
-    float omega; // z 轴角速度
-} SerialFrame;
+#include "SerialFrame.h"
 
 robotserial::Serial *serial;
 
