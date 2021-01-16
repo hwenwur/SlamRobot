@@ -43,6 +43,12 @@ TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
 
 TIAGo Navigation: http://wiki.ros.org/Robots/TIAGo/Tutorials/Navigation/Localization
 
+## Explore
+
+m-explore: http://wiki.ros.org/explore_lite
+
+frontier_explore: http://wiki.ros.org/frontier_exploration
+
 ## 里程计
 
 RF2O Laser Odometry: https://github.com/MAPIRlab/rf2o_laser_odometry
