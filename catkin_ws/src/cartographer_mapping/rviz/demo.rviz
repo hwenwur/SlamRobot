@@ -89,7 +89,9 @@ Visualization Manager:
       Submaps:
         All: true
         Trajectory 0:
-          0.88: true
+          0.180: true
+          1.91: true
+          2.1: true
           Value: true
       Topic: /submap_list
       Tracking frame: base_link
@@ -210,7 +212,7 @@ Visualization Manager:
           Value: true
         Value: true
       Enabled: true
-      Keep: 100
+      Keep: 10
       Name: Odometry
       Position Tolerance: 0.10000000149011612
       Shape:
@@ -253,7 +255,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 0.009999999776482582
+      Angle: 0.019999999552965164
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -263,11 +265,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 101.94859313964844
+      Scale: 316.6368713378906
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0
-      Y: 0
+      X: 0.2507479190826416
+      Y: -0.12382642924785614
     Saved: ~
 Window Geometry:
   Displays:
