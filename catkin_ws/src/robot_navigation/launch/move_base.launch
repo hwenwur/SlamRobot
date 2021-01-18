@@ -1,7 +1,7 @@
 <launch>
 
    <master auto="start"/>
-   <node name="map_server" pkg="map_server" type="map_server" args="/home/hb/srm/SlamRobot/map/map.yaml"/>
+   <!-- <node name="map_server" pkg="map_server" type="map_server" args="/home/hb/srm/SlamRobot/map/map.yaml"/> -->
 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <rosparam file="$(find robot_navigation)/configurations/common_costmap.yaml" command="load" ns="global_costmap" />
