@@ -7,6 +7,7 @@ Panels:
         - /TF1/Frames1
         - /Global Planner Path1
         - /Odometry1
+        - /LocalCostMap1
       Splitter Ratio: 0.6006709933280945
     Tree Height: 703
   - Class: rviz/Selection
@@ -90,8 +91,14 @@ Visualization Manager:
         All: true
         Trajectory 0:
           0.180: true
-          1.91: true
-          2.1: true
+          1.180: true
+          2.180: true
+          3.180: true
+          4.180: true
+          5.180: true
+          6.180: true
+          7.166: true
+          8.76: true
           Value: true
       Topic: /submap_list
       Tracking frame: base_link
@@ -228,6 +235,16 @@ Visualization Manager:
       Topic: /odom
       Unreliable: false
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: LocalCostMap
+      Topic: /move_base/local_costmap/costmap
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 100; 100; 100
@@ -265,11 +282,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 316.6368713378906
+      Scale: 84.96894836425781
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.2507479190826416
-      Y: -0.12382642924785614
+      X: 0.4350872337818146
+      Y: 0.610974907875061
     Saved: ~
 Window Geometry:
   Displays:
