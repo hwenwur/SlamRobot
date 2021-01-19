@@ -14,14 +14,14 @@ if ! ls -1 /dev | grep ttyUSB >/dev/null; then
     exit 1
 fi
 
-ttyUSB=$(ls -1 /dev/ttyUSB*)
+dev_files=$(ls -1 /dev/tty* | grep --color=never -E 'USB|ACM')
 
-for dev_name in $ttyUSB 
+for dev_name in $dev_files
 do
     info=$(udevadm info --query property --name "$dev_name")
     vid=$(echo "$info" | grep 'ID_VENDOR_ID' | awk -F= '{ print $2 }')
     pid=$(echo "$info" |  grep 'ID_MODEL_ID' | awk -F= '{ print $2 }')
     dev=$(echo "$dev_list" | grep "$vid:$pid" | sed -E 's/^\w{4}:\w{4} //g')
-    echo "$dev_name $dev"
+    echo "$dev_name $vid:$pid $dev"
 done
 
