@@ -26,13 +26,36 @@ namespace robotserial
         CLOSED,            // 已关闭
         UNSET
     };
+    /* 
+        convert literal baudrate to termios flag.
+        such as when literal_val=9600 return B9600.
+     */
+    inline unsigned int convert_literal_baud(unsigned int literal_val)
+    {
+        switch (literal_val)
+        {
+        case 9600:
+            return B9600;
+        case 38400:
+            return B38400;
+        case 115200:
+            return B115200;
+        case 230400:
+            return B230400;
+        case 1152000:
+            return B1152000;
+        default:
+            std::cerr << "unsupport baud rate: " << literal_val << "\n";
+            return B9600;
+        }
+    }
     class Serial
     {
     public:
-        Serial(const std::string &path, unsigned int baudRate = B9600);
+        Serial(const std::string &path, unsigned int baudRate = 9600);
         Serial(const Serial &val) = delete;
         ~Serial();
-        int open();
+        int open(bool defaultSetting = false);
         bool isOpen();
         SerialStatus getStatus();
         int setup();
@@ -53,14 +76,20 @@ namespace robotserial
     // end of header file.
 
     inline Serial::Serial(const std::string &path, unsigned int baudRate) : path(path),
-                                                                            baudRate(baudRate),
                                                                             status(SerialStatus::UNSET),
-                                                                            blocking(true) {}
+                                                                            blocking(true)
+    {
+        this->baudRate = convert_literal_baud(baudRate);
+    }
     inline Serial::~Serial()
     {
         Serial::close();
     }
-    inline int Serial::open()
+
+    /* 
+        @defaultSetting: use exists termios setting in OS.
+     */
+    inline int Serial::open(bool defaultSetting)
     {
         fd = ::open(path.c_str(), O_RDWR);
         if (fd < 0)
@@ -79,6 +108,10 @@ namespace robotserial
             }
             std::cerr << "Error: " << strerror(errno) << "\n";
             return 1;
+        }
+        if (defaultSetting)
+        {
+            return 0;
         }
         if (setup() == 0)
         {
@@ -109,7 +142,7 @@ namespace robotserial
         tty.c_cc[VTIME] = 1;
         tty.c_cc[VMIN] = blocking ? 1 : 0;
 
-        tty.c_cflag |= CRTSCTS;
+        tty.c_cflag &= ~CRTSCTS;
         tty.c_cflag &= ~HUPCL;
 
         tty.c_iflag |= IGNBRK;
