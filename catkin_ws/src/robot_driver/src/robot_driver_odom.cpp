@@ -79,6 +79,11 @@ int main(int argc, char *argv[])
         {
             publish_odom(odom_publisher, vel, trans);
         }
+        else
+        {
+            std::cerr << "Waiting for Velocity or Transform data...\n";
+        }
+
         rate.sleep();
     }
 
