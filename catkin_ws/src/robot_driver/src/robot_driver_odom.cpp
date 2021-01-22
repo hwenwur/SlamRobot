@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     ros::NodeHandle nh_private("~");
     std::string odom_frame, base_frame, odom_topic;
     std::string serial_port;
+    unsigned int baud_rate = 115200;
     int frequent;
     nh_private.param<std::string>("odom_frame", odom_frame, "odom");
     nh_private.param<std::string>("base_frame", base_frame, "base_link");
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
     tf2_ros::Buffer tf_buffer;
     tf2_ros::TransformListener listener(tf_buffer);
 
-    robotserial::Serial mSerial(serial_port, B115200);
+    robotserial::Serial mSerial(serial_port, baud_rate);
     VelocityReader reader(mSerial);
     reader.startReadLoop();
 
