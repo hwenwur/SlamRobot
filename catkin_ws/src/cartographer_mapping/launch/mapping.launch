@@ -10,7 +10,7 @@
     <include file="$(find delta_2a_lidar)/launch/delta_lidar.launch"/>
 
     <!-- static transform between base_link and laser frame -->
-    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.0 0.0 0.10 0.0 0.0 0.0 /base_link /laser 100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.21 0.0 0.14 -2.67 0.0 0.0 /base_link /laser 100" />
 
     <!-- Laser odometry -->
     <include file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch" />

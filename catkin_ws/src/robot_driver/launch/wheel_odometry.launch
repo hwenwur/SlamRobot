@@ -3,7 +3,7 @@
         <param name="odom_frame" value="odom"/>
         <param name="base_frame" value="base_link"/>
         <param name="odom_topic" value="/odom"/>
-        <param name="serial_port" value="/dev/ttyUSB1"/>
+        <param name="serial_port" value="/dev/stm32"/>
         <param name="freq" value="10"/>
     </node>
 </launch>

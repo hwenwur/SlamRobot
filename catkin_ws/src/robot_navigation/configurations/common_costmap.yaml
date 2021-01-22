@@ -1,7 +1,11 @@
-raytrace_range: 3.0
-footprint: [[0.1, 0.1], [-0.1, 0.1], [-0.1, -0.1], [0.1, -0.1]]
+# only update costmap when obstacle range less than obstacle_range
+obstacle_range: 2.5
+#
+raytrace_range: 5.0
+footprint: [[0.27, 0.27], [-0.27, 0.27], [-0.27 -0.27], [0.27, 0.27]]
 # robot_radius: ir_of_robot
-inflation_radius: 0.55
+# Treat all path that stay inflation_radius as having equal obstacle
+inflation_radius: 0.30
 
 observation_sources: laser_scan_sensor
 
