@@ -14,6 +14,7 @@
 
     <!-- Laser odometry -->
     <include file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch" />
+    <!-- <include file="$(find robot_driver)/launch/wheel_odometry.launch" /> -->
 
     <!-- Google Cartographer -->
     <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
