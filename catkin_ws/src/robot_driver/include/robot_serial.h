@@ -91,7 +91,7 @@ namespace robotserial
      */
     inline int Serial::open(bool defaultSetting)
     {
-        fd = ::open(path.c_str(), O_RDWR);
+        fd = ::open(path.c_str(), O_RDWR | O_NOCTTY);
         if (fd < 0)
         {
             switch (errno)
