@@ -54,12 +54,16 @@ int main(int argc, char *argv[])
     std::string serial_port;
     unsigned int baud_rate = 115200;
     int frequent;
-    nh_private.param<std::string>("odom_frame", odom_frame, "odom");
-    nh_private.param<std::string>("base_frame", base_frame, "base_link");
-    nh_private.param<std::string>("odom_topic", odom_topic, "/odom");
-    nh_private.param<std::string>("serial_port", serial_port, "/dev/ttyUSB1");
-    nh_private.param<int>("freq", frequent, 6);
-
+    nh_private.getParam("odom_frame", odom_frame);
+    nh_private.getParam("base_frame", base_frame);
+    nh_private.getParam("odom_topic", odom_topic);
+    nh_private.getParam("serial_port", serial_port);
+    nh_private.getParam("freq", frequent);
+    std::cerr << "1. odom_frame:" << std::quoted(odom_frame) << "\n"
+              << "2. odom_topic:" << std::quoted(odom_topic) << "\n"
+              << "3. base_frame:" << std::quoted(base_frame) << "\n"
+              << "4. serial_port:" << std::quoted(serial_port) << "\n"
+              << "5. frequent:" << frequent << "\n";
     ros::Publisher odom_publisher = nh.advertise<nav_msgs::Odometry>(odom_topic, 50);
 
     tf2_ros::Buffer tf_buffer;
@@ -73,20 +77,25 @@ int main(int argc, char *argv[])
     geometry_msgs::TransformStamped trans;
 
     ros::Rate rate(frequent);
+    bool r1, r2;
     while (nh.ok())
     {
-        if (reader.lookupLatestFrame(vel) && lookupLatestTrans(trans, tf_buffer, odom_frame, base_frame))
+        r1 = reader.lookupLatestFrame(vel);
+        if (!r1)
+            std::cerr << "Waiting for velocity data...\n";
+
+        r2 = lookupLatestTrans(trans, tf_buffer, odom_frame, base_frame);
+        if (!r2)
+            std::cerr << "Waiting for transform data...\n";
+
+        if (r1 && r2)
         {
             publish_odom(odom_publisher, vel, trans);
         }
-        else
-        {
-            std::cerr << "Waiting for Velocity or Transform data...\n";
-        }
-
         rate.sleep();
     }
-
+    std::cerr << "Stop read loop...\n";
     reader.stopReadLoop();
+    std::cerr << "Readloop stoped\n";
     return 0;
 }
