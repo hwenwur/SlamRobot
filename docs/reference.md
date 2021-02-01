@@ -32,6 +32,11 @@ V-REP manual: https://www.coppeliarobotics.com/helpFiles/index.html
 
 V-REP tutorials: https://www.coppeliarobotics.com/helpFiles/en/tutorials.htm
 
+URDF: https://wiki.ros.org/urdf/Tutorials
+
+Gazebo connect to ROS: http://gazebosim.org/tutorials?cat=connect_ros
+
+ROS gazebo plugins: http://gazebosim.org/tutorials?tut=ros_gzplugins
 
 ## Navigation
 
