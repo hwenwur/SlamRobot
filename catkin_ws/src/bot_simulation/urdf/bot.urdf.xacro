@@ -1,0 +1,144 @@
+<!-- Only ascii are acceptable because of the xacro interpreter-->
+<robot name="origins"
+  xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.14159265358979" />
+  <xacro:property name="length" value="0.582"/>
+  <xacro:property name="width" value="0.496"/>
+  <xacro:property name="height" value="0.10"/>
+  <xacro:property name="wheel_radius" value="0.050" />
+  <xacro:property name="wheel_width" value="0.0505" />
+
+  <!-- @lr: left or right -->
+  <!-- @fr: front or rear -->
+  <xacro:macro name="wheel" params="lr fr xy">
+    <link name="${lr}_${fr}_wheel">
+      <visual>
+        <geometry>
+          <mesh filename="package://bot_simulation/stl/mecanum_wheel_${lr}_${fr}.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${lr}_${fr}_wheel_to_base_link" type="fixed">
+      <parent link="base_link"/>
+      <child link="${lr}_${fr}_wheel"/>
+      <origin xyz="${xy} -0.06"/>
+    </joint>
+
+    <gazebo reference="${lr}_${fr}_wheel">
+      <material>Gazebo/Grey</material>
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+    </gazebo>
+
+  </xacro:macro>
+
+  <link name="base_footprint"></link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.01103 0 0.002" rpy="0 0 0"/>
+      <mass value="2.844"/>
+      <inertia ixx="0.018819942" ixy="0" ixz="-0.000101519" iyy="0.057333716" iyz="0" izz="0.074201740"/>
+    </inertial>
+  </link>
+
+  <xacro:wheel lr="left" fr="front" xy="${(length/2 - 0.04)} ${width/2 + 0.04}"/>
+  <xacro:wheel lr="left" fr="rear" xy="${-(length/2 - 0.04)} ${width/2 + 0.04}"/>
+  <xacro:wheel lr="right" fr="front" xy="${(length/2 - 0.04)} ${-(width/2 + 0.04)}"/>
+  <xacro:wheel lr="right" fr="rear" xy="${-(length/2 - 0.04)} ${-(width/2 + 0.04)}"/>
+
+  <link name="laser">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://bot_simulation/stl/laser.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0315" radius="0.055"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.114" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+  </link>
+
+  <joint name="base_to_laser" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser"/>
+    <origin xyz="${width/2} 0 ${height/2 + 0.02}" rpy="0 0 -2.67"/>
+  </joint>
+
+  <gazebo reference="laser">
+    <material>Gazebo/FlatBlack</material>
+    <sensor type="ray" name="lds_lfcd_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>0.0</min_angle>
+            <max_angle>6.28319</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120</min>
+          <max>3.5</max>
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>laser</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="object_controller" filename="libros_force_move.so">
+      <cmdVelTopic>cmd_vel</cmdVelTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrameId>odom</odometryFrameId>
+      <odometryRate>10.0</odometryRate>
+      <baseLinkName>base_footprint</baseLinkName>
+    </plugin>
+  </gazebo>
+
+</robot>
