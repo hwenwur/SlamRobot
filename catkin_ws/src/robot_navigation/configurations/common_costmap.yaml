@@ -2,7 +2,7 @@
 obstacle_range: 2.5
 #
 raytrace_range: 5.0
-footprint: [[0.27, 0.27], [-0.27, 0.27], [-0.27 -0.27], [0.27, 0.27]]
+footprint: [[0.27, 0.27], [0.27, -0.27], [-0.27, -0.27], [-0.27, 0.27]]
 # robot_radius: ir_of_robot
 # Treat all path that stay inflation_radius as having equal obstacle
 inflation_radius: 0.30
