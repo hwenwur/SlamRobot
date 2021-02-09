@@ -1,0 +1,18 @@
+<launch>
+    <param name="use_sim_time" value="true"/>
+    <!-- Simulator. provide: scan, odom, tf  -->
+    <!-- <include file="$(find bot_simulation)/launch/simulate.launch"/> -->
+
+    <!-- Google Cartographer -->
+    <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
+          -configuration_directory
+              $(find cartographer_mapping)/configuration_files
+          -configuration_basename gazebo_mapping.lua" output="screen">
+    </node>
+
+    <!-- Convert Cartographer map into ROS occupancy grid map -->
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+
+    <node pkg="rviz" type="rviz" name="show_rviz" args="-d $(find cartographer_mapping)/rviz/demo.rviz"/>
+
+</launch>
