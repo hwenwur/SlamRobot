@@ -15,7 +15,39 @@ git clone https://github.com/srm2021/SlamRobot
 ```
 2.  安装 ROS melodic
 
-2.1 安装 ROS 主程序，参见： http://wiki.ros.org/melodic/Installation/Ubuntu
+2.1 安装 ROS 主程序
+
+以下内容摘自官方文档，根据我国网络环境做了修改。原文链接：http://wiki.ros.org/melodic/Installation/Ubuntu
+
+2.1.1 添加软件源
+```shell
+sudo sh -c 'echo "deb http://mirrors.sjtug.sjtu.edu.cn/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+```
+
+2.1.2 添加密钥
+```shell
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt update
+```
+
+2.1.3 安装程序
+```shell
+sudo apt install ros-melodic-desktop-full
+sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+sudo apt install python-rosdep
+```
+
+2.1.4 环境配置（非 `bash` 用户请参考官方文档）
+```shell
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+2.1.5 初始化 `rosdep`（需要翻墙）。
+```shell
+sudo rosdep init
+rosdep update
+```
 
 2.2 安装 ROS package
 ```shell
@@ -29,7 +61,7 @@ rosdep install --from-paths src --ignore-src -r -y
 sudo apt install ros-melodic-rviz ros-melodic-rqt ros-melodic-teleop-twist-keyboard
 ```
 
-4. 安装仿真环境，参见：http://gazebosim.org/tutorials?tut=install_ubuntu
+关于 `rviz` 的用法，参见：http://wiki.ros.org/rviz
 
 ### `SBC` 上安装步骤
 使用 Docker 的步骤：
