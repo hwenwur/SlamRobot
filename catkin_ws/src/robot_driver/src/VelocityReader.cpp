@@ -3,28 +3,36 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <stdio.h>
+
+#define VEL_DEBUG_MODE (0)
 
 VelocityReader::VelocityReader(robotserial::Serial &mSerial) : mSerial(mSerial),
                                                                cacheStartPos(-1),
                                                                loopRunning(false),
                                                                readThread(0)
 {
+#if !VEL_DEBUG_MODE
     mSerial.setBlocking(false);
     mSerial.open();
     if (!mSerial.isOpen())
     {
         std::cerr << "robotserial::Serial not open or open failed.\n";
     }
+#endif
 }
 
 VelocityReader::~VelocityReader()
 {
+#if !VEL_DEBUG_MODE
     mSerial.close();
+#endif
     stopReadLoop();
 }
 
 bool VelocityReader::seekHeader()
 {
+
     char curr, last;
     int max_try = 1024;
     int r;
@@ -66,7 +74,8 @@ bool VelocityReader::lookupLatestFrame(SerialFrameTimestamped *frame)
     else
     {
         *frame = frameCache[cacheStartPos];
-        std::cerr << "Velocity(" << frame->frame.vx << ", " << frame->frame.vy << ", " << frame->frame.omega << ");\n";
+        // fprintf(stderr, "Velocity[%d](%.2f, %.2f, %.2f)\n", cacheStartPos, frame->frame.vx, frame->frame.vy, frame->frame.omega);
+        // std::cerr << "Velocity[" << cacheStartPos << "](" << frame->frame.vx << ", " << frame->frame.vy << ", " << frame->frame.omega << ");\n";
         return true;
     }
 }
@@ -92,6 +101,7 @@ void VelocityReader::stopReadLoop()
 
 void VelocityReader::readLoop()
 {
+
     static char buff[BUFFER_LEN];
     cacheStartPos = -1;
     SerialFrameTimestamped tmp;
@@ -101,25 +111,21 @@ void VelocityReader::readLoop()
     loopRunning = true;
     while (loopRunning)
     {
+#if !VEL_DEBUG_MODE
         available = mSerial.availableBytes();
-        if (available < sizeof(SerialFrame) + 2)
+        while (available < sizeof(SerialFrame) + 2)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            available = mSerial.availableBytes();
         }
 
         available = available - (available % (sizeof(SerialFrame) + 2));
         available = available > BUFFER_LEN ? BUFFER_LEN : available;
-
         count = mSerial.read(buff, available);
         if (count < 0)
         {
             std::cerr << "Read serial failed: " << strerror(errno) << "\n";
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        }
-        else if (count == 0)
-        {
-            // std::cerr << "Waiting for serial data(count = 0)...\n";
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
         else if (count < (sizeof(SerialFrame) + 2))
         {
@@ -145,8 +151,25 @@ void VelocityReader::readLoop()
             }
             if (i == 0)
             {
-                std::cerr << "Faild to find header(count > 14)\n";
+                // std::cerr << "Faild to find header(count > 14)\n";
+                seekHeader();
             }
         }
+#else
+        // debug mode
+        {
+            std::lock_guard<std::mutex> l(frameCacheLock);
+            tmp.frame.vx = 0.1;
+            tmp.frame.vy = 0;
+            tmp.frame.omega = 0;
+            tmp.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                std::chrono::system_clock::now().time_since_epoch())
+                                .count();
+            cacheStartPos = (cacheStartPos + 1) % CACHE_LEN;
+            frameCache[cacheStartPos] = tmp;
+        }
+        // 10Hz
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+#endif
     }
 }
