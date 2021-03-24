@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     bool r1, r2;
     while (nh.ok())
     {
-        r1 = reader.lookupLatestFrame(vel);
+        r1 = reader.lookupLatestFrame(&vel);
         if (!r1)
             std::cerr << "Waiting for velocity data...\n";
 

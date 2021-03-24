@@ -2,6 +2,7 @@
 #define ROBOT_SERIAL_H
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 #include <termios.h>
 #include <errno.h>
 #include <string.h>
@@ -63,6 +64,7 @@ namespace robotserial
         int write(const void *data, size_t count);
         bool writeAll(const void *data, size_t count);
         int read(void *data, size_t count);
+        int availableBytes();
         void setBlocking(bool m);
 
     private:
@@ -207,6 +209,12 @@ namespace robotserial
             std::cerr << "You must call setBlocking before open()";
         }
         blocking = m;
+    }
+    inline int Serial::availableBytes()
+    {
+        int ret = -1;
+        ::ioctl(this->fd, FIONREAD, &ret);
+        return ret;
     }
 } // namespace robotserial
 

@@ -55,51 +55,9 @@ bool VelocityReader::seekHeader()
     return false;
 }
 
-bool VelocityReader::lookupLatestFrame(SerialFrameTimestamped &frame)
+bool VelocityReader::lookupLatestFrame(SerialFrameTimestamped *frame)
 {
-    // const size_t BUFFER_LEN = (sizeof(SerialFrame) + 2) * 10;
-    // char buff[BUFFER_LEN];
-    // int count = -1;
-    // count = mSerial.read(buff, BUFFER_LEN);
-    // if (count < 0)
-    // {
-    //     std::cerr << "Error: " << strerror(errno) << "\n";
-    //     return false;
-    // }
-    // else if (count == 0)
-    // {
-    //     // waiting for data
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    // }
-    // else if (count < 14)
-    // {
-    //     std::cerr << "Error: count(" << count << ") < 14\n";
-    //     return false;
-    // }
-    // else
-    // {
-    //     int i;
-    //     for (i = count - 1; i > 0; i--)
-    //     {
-    //         if (buff[i] == '\n' && buff[i - 1] == '\r' && (i - 1 - sizeof(SerialFrame) >= 0))
-    //         {
-    //             SerialFrame *f = (SerialFrame *)(buff + (i - 1 - sizeof(SerialFrame)));
-    //             frame.frame = *f;
-    //             frame.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-    //                                   std::chrono::system_clock::now().time_since_epoch())
-    //                                   .count();
-    //             std::cerr << "Velocity(" << f->vx << ", " << f->vy << ", " << f->omega << ");\n";
-    //             return true;
-    //         }
-    //     }
-    //     if (i == 0)
-    //     {
-    //         std::cerr << "Failed to find header\n";
-    //         return false;
-    //     }
-    // }
-    // return false;
-
+    std::lock_guard<std::mutex> l(frameCacheLock);
     if (cacheStartPos < 0)
     {
         std::cerr << "cacheStartPos < 0; not have any cache.\n";
@@ -107,8 +65,8 @@ bool VelocityReader::lookupLatestFrame(SerialFrameTimestamped &frame)
     }
     else
     {
-        frame = frameCache[cacheStartPos];
-        std::cerr << "Velocity(" << frame.frame.vx << ", " << frame.frame.vy << ", " << frame.frame.omega << ");\n";
+        *frame = frameCache[cacheStartPos];
+        std::cerr << "Velocity(" << frame->frame.vx << ", " << frame->frame.vy << ", " << frame->frame.omega << ");\n";
         return true;
     }
 }
@@ -134,17 +92,25 @@ void VelocityReader::stopReadLoop()
 
 void VelocityReader::readLoop()
 {
-    const size_t BUFFER_LEN = (sizeof(SerialFrame) + 2) * 10;
-    char buff[BUFFER_LEN];
+    static char buff[BUFFER_LEN];
     cacheStartPos = -1;
     SerialFrameTimestamped tmp;
-    int count;
+    int count, available;
     int i;
 
     loopRunning = true;
     while (loopRunning)
     {
-        count = mSerial.read(buff, BUFFER_LEN);
+        available = mSerial.availableBytes();
+        if (available < sizeof(SerialFrame) + 2)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+
+        available = available - (available % (sizeof(SerialFrame) + 2));
+        available = available > BUFFER_LEN ? BUFFER_LEN : available;
+
+        count = mSerial.read(buff, available);
         if (count < 0)
         {
             std::cerr << "Read serial failed: " << strerror(errno) << "\n";
@@ -152,13 +118,13 @@ void VelocityReader::readLoop()
         }
         else if (count == 0)
         {
-            std::cerr << "Waiting for serial data(count = 0)...\n";
+            // std::cerr << "Waiting for serial data(count = 0)...\n";
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
         else if (count < (sizeof(SerialFrame) + 2))
         {
             std::cerr << "Waiting serial(count < 14)...\n";
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
         else
         {
@@ -171,8 +137,9 @@ void VelocityReader::readLoop()
                                         std::chrono::system_clock::now().time_since_epoch())
                                         .count();
 
-                    frameCache[(cacheStartPos + 1) % CACHE_LEN] = tmp;
+                    std::lock_guard<std::mutex> l(frameCacheLock);
                     cacheStartPos = (cacheStartPos + 1) % CACHE_LEN;
+                    frameCache[cacheStartPos] = tmp;
                     break;
                 }
             }
