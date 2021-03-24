@@ -179,7 +179,7 @@ namespace gazebo
                 // 既有线速度，也有角速度
                 // x_vel, y_vel 指的是前方和左方的速度。
                 // 把前方、左方的速度分解成 x 轴和 y 轴速度，然后积分即可得到以下式子。
-                double delta_theta = yaw_vel * duration;
+                // double delta_theta = yaw_vel * duration;
                 double x = (x_vel * std::sin(theta) + y_vel * std::cos(theta) - y_vel) / yaw_vel;
                 double y = (x_vel - x_vel * cos(theta) + y_vel * std::sin(theta)) / yaw_vel;
                 ret.setOrigin(tf::Vector3(x, y, 0));
