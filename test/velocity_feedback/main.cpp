@@ -13,9 +13,11 @@ int main()
   bool r;
   while(true)
   {
-    r = reader.lookupLatestFrame(vel);
+    r = reader.lookupLatestFrame(&vel);
     if(r)
       printf("%.2f, %.2f, %.2f, %lu\n", vel.frame.vx, vel.frame.vy, vel.frame.omega, vel.timestamp / 1000);
+    else
+      printf("Error\n");
     sleep(1);
   }
   reader.stopReadLoop();
