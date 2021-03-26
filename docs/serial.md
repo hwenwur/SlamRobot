@@ -16,6 +16,7 @@
 1. 包头：用于确定起始位置
 2. 指令类型和数据部分长度。见下表，以下类型号均为无符号整形(`uint8_t`), 下同。
 电控端接收包的类型号为从0递增。电控端发送包为从255递减。
+
 |类型号|说明|数据部分长度(byte)|
 |---|---|---|
 |0|速度指令，控制机器底盘运动|12|
@@ -43,8 +44,8 @@ uint8_t computeChecksum(uint8_t *p, int len)
 /*
 	调用示例：
 	float data[3] = {0, -2.71, 3.14};
-    uint8_t crc = computeChecksum((uint8_t*)&data, sizeof(data));
-    此时 crc = 65;
+   	uint8_t crc = computeChecksum((uint8_t*)&data, sizeof(data));
+	此时 crc = 65;
 */
 ```
 
