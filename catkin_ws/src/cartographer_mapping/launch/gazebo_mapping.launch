@@ -7,7 +7,8 @@
     <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
           -configuration_directory
               $(find cartographer_mapping)/configuration_files
-          -configuration_basename gazebo_mapping.lua" output="screen">
+          -configuration_basename gazebo_mapping.lua
+          -load_state_filename /home/hb/srm/SlamRobot/data/battleground.pbstream" output="screen">
     </node>
 
     <!-- Convert Cartographer map into ROS occupancy grid map -->
