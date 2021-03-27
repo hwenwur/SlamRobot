@@ -152,9 +152,7 @@ add_library(ros_force_move
 ## Specify libraries to link a library or executable target against
 target_link_libraries(ros_force_move
   ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARY_DIRS}
 )
-
 #############
 ## Install ##
 #############
