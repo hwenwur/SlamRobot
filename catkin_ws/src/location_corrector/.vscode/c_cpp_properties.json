@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/opt/ros/melodic/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/bot_core/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/bot_simulation/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/cartographer_mapping/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/explore_lite/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/location_corrector/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/rf2o_laser_odometry/include/**",
+        "/home/hb/srm/SlamRobot/catkin_ws/src/robot_driver/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
