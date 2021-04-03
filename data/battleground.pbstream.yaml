@@ -1,0 +1,9 @@
+# 文件名
+pbstream_file: battleground.pbstream
+# 到世界坐标系变换矩阵参数
+world_tf_degree: 2.73215330662
+world_tf_dx: 12.9744015
+world_tf_dy: -6.10249968
+# 在 map 坐标系的中心对称点坐标
+centeral_x: -0.3321249485
+centeral_y: -1.075595140455
