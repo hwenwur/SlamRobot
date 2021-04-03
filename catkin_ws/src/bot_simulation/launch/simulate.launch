@@ -1,7 +1,7 @@
 <launch>
   <!-- 模型初始位置 -->
-  <arg name="x_pos" default="-12.0"/>
-  <arg name="y_pos" default="-1.5"/>
+  <arg name="x_pos" default="-12.4"/>
+  <arg name="y_pos" default="-1.38"/>
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
