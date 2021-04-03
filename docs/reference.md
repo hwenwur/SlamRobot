@@ -17,6 +17,8 @@ Openvslam 文档：https://openvslam.readthedocs.io/en/master/overview.html#tuto
 
 Cartographer 文档：https://google-cartographer.readthedocs.io/en/latest/
 
+Cartographer set initial pose: https://github.com/cartographer-project/cartographer_ros/issues/579
+
 ROS 文档： http://wiki.ros.org/
 
 ROS navigation: http://wiki.ros.org/navigation
@@ -47,6 +49,12 @@ ros-navigation机器人自主避障导航: https://www.cnblogs.com/hiram-zhang/p
 TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
 
 TIAGo Navigation: http://wiki.ros.org/Robots/TIAGo/Tutorials/Navigation/Localization
+
+base_local_planner: http://wiki.ros.org/base_local_planner
+
+costmap_2d: http://wiki.ros.org/costmap_2d
+
+路径规划算法动图展示：https://github.com/zhm-real/PathPlanning
 
 ## Explore
 
