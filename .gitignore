@@ -5,6 +5,9 @@ map/
 catkin_ws/build
 catkin_ws/devel
 
+# pyenv configuration file
+.python-version
+
 # Prerequisites
 *.d
 
