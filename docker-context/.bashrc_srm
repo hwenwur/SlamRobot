@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+source "/opt/ros/$ROS_DISTRO/setup.bash"
+
+export SLAMROBOT_HOME='/root/SlamRobot'
+cd "$SLAMROBOT_HOME/catkin_ws" && source ./devel/setup.bash && cd ..
+
+set +e
+
+bind '"^[[A":history-search-backward'
+alias sou="source ./devel/setup.bash"
+alias cdc="cd catkin_ws"
+

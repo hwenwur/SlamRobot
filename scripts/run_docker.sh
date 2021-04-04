@@ -9,12 +9,12 @@ function docker_run() {
 		-v $PWD:/root/SlamRobot \
 		--cap-add=SYS_PTRACE \
 		hwenwur/ros \
-		bash -c 'cd /root/SlamRobot && bash'
+		bash
 }
 
 function docker_exec() {
 	local containerId="$1"
-	docker exec -it "$containerId" bash -c 'cd /root/SlamRobot && /ros_entrypoint.sh bash'
+	docker exec -it "$containerId" bash
 }
 
 function main() {
