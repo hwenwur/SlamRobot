@@ -50,7 +50,13 @@ TF wiki: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
 
 TIAGo Navigation: http://wiki.ros.org/Robots/TIAGo/Tutorials/Navigation/Localization
 
+move_base: http://wiki.ros.org/move_base
+
+actionlib: https://wiki.ros.org/actionlib
+
 base_local_planner: http://wiki.ros.org/base_local_planner
+
+ros nav_core: https://wiki.ros.org/nav_core
 
 costmap_2d: http://wiki.ros.org/costmap_2d
 
