@@ -1,0 +1,4 @@
+<launch>
+    <rosparam file="$(env SLAMROBOT_HOME)/data/battleground-0407.pbstream.yaml" command="load"/>
+    <node name="world_transform_publisher" pkg="world_transform_publisher" type="world_transform_publisher_node" output="screen"/>
+</launch>
