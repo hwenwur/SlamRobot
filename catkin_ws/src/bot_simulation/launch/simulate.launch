@@ -4,6 +4,8 @@
   <arg name="y_pos" default="-1.38"/>
   <arg name="z_pos" default="0.0"/>
 
+  <param name="use_sim_time" value="true"/>
+
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find bot_simulation)/worlds/battle_ground.sdf"/>
     <arg name="paused" value="false"/>
