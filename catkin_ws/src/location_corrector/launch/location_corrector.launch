@@ -4,6 +4,6 @@
         <param name="unadjust_map_frame" type="string" value="map_carto"/>
         <param name="child_frame" type="string" value="base_link"/>
         <!-- 在 unadjust_map_frame 中的坐标，对称中心点 -->
-        <rosparam command="load" file="$(env SLAMROBOT_HOME)/data/battleground.pbstream.yaml"/>
+        <rosparam command="load" file="$(env SLAMROBOT_HOME)/data/battleground-0407.pbstream.yaml"/>
     </node>
 </launch>
