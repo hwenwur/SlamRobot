@@ -1,0 +1,11 @@
+<launch>
+    <node name="bot_core_node" pkg="bot_core" type="bot_core_node" output="screen">
+        <!-- transform matrix from map to world frame. this is *.pbstream specific.-->
+        <!-- for data/battleground.pbstream -->
+        <!-- 坐标原点没有和官方完全对齐 -->
+        <!-- <param name="world_tf_degree" type="double" value="2.73215330662"/>
+        <param name="world_tf_dx" type="double" value="12.9744015"/>
+        <param name="world_tf_dy" type="double" value="-6.10249968"/> -->
+        <rosparam command="load" file="$(env SLAMROBOT_HOME)/data/battleground.pbstream.yaml"/>
+    </node>
+</launch>
