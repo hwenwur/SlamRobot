@@ -10,7 +10,6 @@ project(robot_navigation)
 find_package(catkin REQUIRED COMPONENTS
   cartographer_mapping
   delta_2a_lidar
-  rf2o_laser_odometry
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +104,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES robot_navigation
-#  CATKIN_DEPENDS cartographer_mapping delta_2a_lidar rf2o_laser_odometry
+#  CATKIN_DEPENDS cartographer_mapping delta_2a_lidar 
 #  DEPENDS system_lib
 )
 

@@ -51,13 +51,10 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>cartographer_mapping</build_depend>
   <build_depend>delta_2a_lidar</build_depend>
-  <build_depend>rf2o_laser_odometry</build_depend>
   <build_export_depend>cartographer_mapping</build_export_depend>
   <build_export_depend>delta_2a_lidar</build_export_depend>
-  <build_export_depend>rf2o_laser_odometry</build_export_depend>
   <exec_depend>cartographer_mapping</exec_depend>
   <exec_depend>delta_2a_lidar</exec_depend>
-  <exec_depend>rf2o_laser_odometry</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

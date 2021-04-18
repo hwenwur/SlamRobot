@@ -1,11 +1,48 @@
+# local planner, only the one specify in common_planner.yaml/base_local_planner was considerated
+
+# https://wiki.ros.org/base_local_planner
 TrajectoryPlannerROS:
-  max_vel_x: 2.0
-  min_vel_x: 0.1
-  max_vel_theta: 6.0
+  max_vel_x: 3.0
+  min_vel_x: 0.5
+  max_vel_theta: 3.14
   min_in_place_vel_theta: 0.4
 
-  acc_lim_theta: 6.0
-  acc_lim_x: 0.5
-  acc_lim_y: 0.5
+  acc_lim_theta: 3.14
+  acc_lim_x: 4.0
+  acc_lim_y: 4.0
 
   holonomic_robot: true
+  # 消除震荡
+  # oscillation_reset_dist: 0.15
+  yaw_goal_tolerance: 0.5
+  xy_goal_tolerance: 0.2
+
+# https://wiki.ros.org/dwa_local_planner
+DWAPlannerROS:
+  max_vel_x: 3.0
+  min_vel_x: -3.0
+  max_vel_y: 3.0
+  min_vel_y: -3.0
+  max_vel_trans: 4.2
+  min_vel_trans: 0.1
+  max_vel_theta: 3.14
+  min_vel_theta: 0.1
+
+  acc_lim_th: 3.14
+  acc_lim_x: 4.0
+  acc_lim_y: 4.0
+  acc_lim_trans: 5.6
+
+  # 30 度以内误差皆可接受
+  yaw_goal_tolerance: 0.52
+  # oscillation_reset_dist: 0.15
+  # sim_time: 0.85
+
+TebLocalPlannerROS:
+  acc_lim_x: 2.0
+  acc_lim_theta: 3.14
+  max_vel_x: 3.0
+  max_vel_x_backwards: 3.0
+  max_vel_theta: 2.0
+  max_vel_y: 3.0
+  acc_lim_y: 2.0

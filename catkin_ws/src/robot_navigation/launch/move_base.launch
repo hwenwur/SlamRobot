@@ -1,13 +1,13 @@
 <launch>
 
-   <master auto="start"/>
-   <!-- <node name="map_server" pkg="map_server" type="map_server" args="/home/hb/srm/SlamRobot/map/map.yaml"/> -->
-
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <!-- costmap configurations -->
       <rosparam file="$(find robot_navigation)/configurations/common_costmap.yaml" command="load" ns="global_costmap" />
       <rosparam file="$(find robot_navigation)/configurations/common_costmap.yaml" command="load" ns="local_costmap" />
-      <rosparam file="$(find robot_navigation)/configurations/local_constmap.yaml" command="load" />
+      <rosparam file="$(find robot_navigation)/configurations/local_costmap.yaml" command="load" />
       <rosparam file="$(find robot_navigation)/configurations/global_costmap.yaml" command="load" />
+      <!-- planner configurations -->
+      <rosparam file="$(find robot_navigation)/configurations/common_planner.yaml" command="load"/>
       <rosparam file="$(find robot_navigation)/configurations/base_local_planner.yaml" command="load" />
    </node>
 

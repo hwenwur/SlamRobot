@@ -1,0 +1,14 @@
+local_costmap:
+  publish_frequency: 1.0
+  resolution: 0.05
+  robot_base_frame: base_footprint
+  footprint: [[0.3, 0.3], [0.3, -0.3], [-0.3, -0.3], [-0.3, 0.3]]
+  rolling_window: true
+  transform_tolerance: 0.3
+  update_frequency: 5.0
+  width: 4
+  height: 4
+  global_frame: odom
+  plugins:
+    - { name: obstacle_laser_layer, type: "costmap_2d::ObstacleLayer" }
+    - { name: inflation_layer, type: "costmap_2d::InflationLayer" }

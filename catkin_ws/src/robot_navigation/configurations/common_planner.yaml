@@ -1,0 +1,13 @@
+# references: http://wiki.ros.org/move_base
+# dwa_local_planner/DWAPlannerROS
+# base_local_planner/TrajectoryPlannerROS
+# teb_local_planner/TebLocalPlannerROS
+base_local_planner: teb_local_planner/TebLocalPlannerROS
+base_global_planner: global_planner/GlobalPlanner
+# oscillation_distance: 1
+controller_frequency: 10
+# planner_frequency: 0.5
+
+# todo: move to another file
+GlobalPlanner:
+  visualize_potential: true
