@@ -33,13 +33,14 @@ options = {
   num_point_clouds = 0,
   lookup_transform_timeout_sec = 0.2,
   submap_publish_period_sec = 0.2,
-  pose_publish_period_sec = 5e-3,
+  pose_publish_period_sec = 1e-3,
   trajectory_publish_period_sec = 30e-3,
   rangefinder_sampling_ratio = 1.,
   odometry_sampling_ratio = 1.,
   fixed_frame_pose_sampling_ratio = 1.,
   imu_sampling_ratio = 1.,
   landmarks_sampling_ratio = 1.,
+  publish_tracked_pose = true,
 }
 
 MAP_BUILDER.use_trajectory_builder_2d = true
@@ -61,7 +62,11 @@ POSE_GRAPH.constraint_builder.global_localization_min_score = 0.65
 POSE_GRAPH.optimization_problem.huber_scale = 1e2
 
 -- Pure Localization in a Given Map
-TRAJECTORY_BUILDER.pure_localization = true
+-- TRAJECTORY_BUILDER.pure_localization = true
+TRAJECTORY_BUILDER.pure_localization_trimmer = {
+  max_submaps_to_keep = 3,
+}
+
 POSE_GRAPH.optimize_every_n_nodes = 10
 global_sampling_ratio = 0.001
 POSE_GRAPH.constraint_builder.sampling_ratio = 0.01
