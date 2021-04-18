@@ -546,6 +546,8 @@ namespace base_local_planner{
     }
 
     //should we use the dynamic window approach?
+    // dwa default is true
+    // sim_period_ = 1.0 / controller_frequency;
     if (dwa_) {
       max_vel_x = max(min(max_vel_x, vx + acc_x * sim_period_), min_vel_x_);
       min_vel_x = max(min_vel_x_, vx - acc_x * sim_period_);
@@ -570,9 +572,11 @@ namespace base_local_planner{
     double vy_samp = 0.0;
 
     //keep track of the best trajectory seen so far
+    // this->trag_one
     Trajectory* best_traj = &traj_one;
     best_traj->cost_ = -1.0;
-
+  
+    // this->trag_two
     Trajectory* comp_traj = &traj_two;
     comp_traj->cost_ = -1.0;
 
@@ -591,6 +595,7 @@ namespace base_local_planner{
             acc_x, acc_y, acc_theta, impossible_cost, *comp_traj);
 
         //if the new trajectory is better... let's take it
+        //small is better
         if(comp_traj->cost_ >= 0 && (comp_traj->cost_ < best_traj->cost_ || best_traj->cost_ < 0)){
           swap = best_traj;
           best_traj = comp_traj;
@@ -700,27 +705,28 @@ namespace base_local_planner{
     //do we have a legal trajectory
     if (best_traj->cost_ >= 0) {
       // avoid oscillations of in place rotation and in place strafing
+      // lesser equal
       if ( ! (best_traj->xv_ > 0)) {
         if (best_traj->thetav_ < 0) {
           if (rotating_right) {
-            stuck_right = true;
+            this->stuck_right = true;
           }
-          rotating_right = true;
+          this->rotating_right = true;
         } else if (best_traj->thetav_ > 0) {
-          if (rotating_left){
-            stuck_left = true;
+          if (this->rotating_left){
+            this->stuck_left = true;
           }
-          rotating_left = true;
+          this->rotating_left = true;
         } else if(best_traj->yv_ > 0) {
-          if (strafe_right) {
-            stuck_right_strafe = true;
+          if (this->strafe_right) {
+            this->stuck_right_strafe = true;
           }
-          strafe_right = true;
+          this->strafe_right = true;
         } else if(best_traj->yv_ < 0){
-          if (strafe_left) {
-            stuck_left_strafe = true;
+          if (this->strafe_left) {
+            this->stuck_left_strafe = true;
           }
-          strafe_left = true;
+          this->strafe_left = true;
         }
 
         //set the position we must move a certain distance away from

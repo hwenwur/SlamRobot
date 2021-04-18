@@ -497,6 +497,12 @@ namespace base_local_planner {
     tc_->updatePlan(transformed_plan);
 
     //compute what trajectory to drive along
+    ROS_DEBUG_NAMED("trajectory_planner_ros", "findBestPath: %s(%.2lf, %.2lf), v(%.2lf, %.2lf)",
+      global_pose.header.frame_id.c_str(), 
+      global_pose.pose.position.x,
+      global_pose.pose.position.y,
+      robot_vel.pose.position.x,
+      robot_vel.pose.position.y);
     Trajectory path = tc_->findBestPath(global_pose, robot_vel, drive_cmds);
 
     map_viz_.publishCostCloud(costmap_);

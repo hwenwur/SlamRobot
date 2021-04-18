@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(base_local_planner)
 
+# set(CMAKE_BUILD_TYPE Debug)
+
 include(CheckIncludeFile)
 
 find_package(catkin REQUIRED
