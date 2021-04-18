@@ -5,6 +5,8 @@
     "cmake.configureOnOpen": false,
     "files.associations": {
         "iostream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "chrono": "cpp"
     }
 }

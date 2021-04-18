@@ -58,6 +58,8 @@
   <depend>tf2</depend>
   <depend>nav_msgs</depend>
 
+  <test_depend>rosunit</test_depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(robot_driver)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -136,7 +138,12 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/robot_driver_node.cpp)
-add_executable(${PROJECT_NAME}_odom src/robot_driver_odom.cpp src/VelocityReader.cpp src/WheelOdometry.cpp)
+add_executable(${PROJECT_NAME}_odom 
+  src/robot_driver_odom.cpp 
+  src/WheelOdometry.cpp
+  src/VelocityReader.cpp
+)
+add_executable(uwb_driver_node src/uwb_driver_node.cpp src/UWBPublisher.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -148,6 +155,7 @@ add_executable(${PROJECT_NAME}_odom src/robot_driver_odom.cpp src/VelocityReader
 ## same as for the library above
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_odom ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(uwb_driver_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -160,6 +168,9 @@ target_link_libraries(${PROJECT_NAME}_odom
   -pthread
 )
 
+target_link_libraries(uwb_driver_node
+  ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
@@ -207,9 +218,9 @@ target_link_libraries(${PROJECT_NAME}_odom
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_robot_driver.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# if(CATKIN_ENABLE_TESTING)
+#   catkin_add_gtest(uwb_driver_node_test test/uwb_driver_node_test.cpp src/UWBPublisher.cpp)
+#   target_link_libraries(uwb_driver_node_test ${catkin_LIBRARIES} gtest_main)
 # endif()
 
 ## Add folders to be run by python nosetests

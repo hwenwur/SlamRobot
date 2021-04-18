@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "ignore invalid data(%.2f, %.2f, %.2f)\n", vel.frame.vx, vel.frame.vy, vel.frame.omega);
             continue;
         }
+        // update pose and oritention from /odom frame, publish mav_msgs/Odometry and TF tree.
         wodom.update(vel);
         rate.sleep();
     }

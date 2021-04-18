@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#include <sys/stat.h>
 #include <termios.h>
 #include <errno.h>
 #include <string.h>
@@ -72,6 +73,7 @@ namespace robotserial
         unsigned int baudRate;
         SerialStatus status;
         int fd;
+        bool regularFile;
         bool blocking; // 阻塞模式，默认 true
     };
 
@@ -79,7 +81,8 @@ namespace robotserial
 
     inline Serial::Serial(const std::string &path, unsigned int baudRate) : path(path),
                                                                             status(SerialStatus::UNSET),
-                                                                            blocking(true)
+                                                                            blocking(true),
+                                                                            regularFile(false)
     {
         this->baudRate = convert_literal_baud(baudRate);
     }
@@ -93,7 +96,26 @@ namespace robotserial
      */
     inline int Serial::open(bool defaultSetting)
     {
-        fd = ::open(path.c_str(), O_RDWR | O_NOCTTY);
+        struct stat s;
+        if (::stat(path.c_str(), &s) == 0)
+        {
+            // we may use reggular file to debug
+            if (S_ISREG(s.st_mode))
+            {
+                fd = ::open(path.c_str(), O_RDWR);
+                status = SerialStatus::OK;
+                regularFile = true;
+                return 0;
+            }
+            else
+            {
+                fd = ::open(path.c_str(), O_RDWR | O_NOCTTY);
+            }
+        }
+        else
+        {
+            fd = -1;
+        }
         if (fd < 0)
         {
             switch (errno)
@@ -111,10 +133,9 @@ namespace robotserial
             std::cerr << "Error: " << strerror(errno) << "\n";
             return 1;
         }
+        // whether use default termios setting
         if (defaultSetting)
-        {
             return 0;
-        }
         if (setup() == 0)
         {
             status = SerialStatus::OK;
@@ -212,6 +233,11 @@ namespace robotserial
     }
     inline int Serial::availableBytes()
     {
+        if (regularFile)
+        {
+            // todo
+            return 999;
+        }
         int ret = -1;
         ::ioctl(this->fd, FIONREAD, &ret);
         return ret;

@@ -1,0 +1,9 @@
+<launch>
+    <node name="uwb_driver" pkg="robot_driver" type="uwb_driver_node" output="screen">
+        <param name="serial_port" value="/home/hb/test/fake-uwb-data.bin"/>
+        <param name="frame_id" value="uwb"/>
+        <param name="global_frame" value="world"/>
+        <!-- 弧度制，地磁场南极和 global_frame x 轴角度差 -->
+        <param name="south_angle" value="3.14"/>
+    </node>
+</launch>
