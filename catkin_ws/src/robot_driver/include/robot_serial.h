@@ -204,7 +204,20 @@ namespace robotserial
     }
     inline int Serial::read(void *data, size_t count)
     {
-        return ::read(fd, data, count);
+        // 串口线被拔了之后，read 不会报错，而是一直返回 0
+        int ret = ::read(fd, data, count);
+        if (ret == 0)
+        {
+            if (availableBytes() < 0)
+            {
+                // serial disconected...
+                std::cerr << strerror(errno) << ", Serial may disconncted\n";
+                status = SerialStatus::FAILED;
+                ::close(this->fd);
+                return -1;
+            }
+        }
+        return ret;
     }
     inline bool Serial::writeAll(const void *data, size_t count)
     {
